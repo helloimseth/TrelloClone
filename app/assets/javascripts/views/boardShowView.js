@@ -5,11 +5,13 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
 
   initialize: function () {
     this.listenTo(this.model, "sync", this.render)
+    this.listenTo(this.model.lists(), "sync remove", this.render)
   },
 
   events: {
     "click #index-button": "returnToIndex",
-    "click #add-list": "createNewList"
+    "click #add-list": "renderNewListInput",
+    "blur input": "createNewList"
   },
 
   render: function () {
@@ -34,11 +36,28 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
     }.bind(this))
   },
 
-  createNewList: function (event) {
-    this.$newListButton = $(event.currentTarget);
+  renderNewListInput: function (event) {
+    this._$newListButton = $(event.currentTarget);
     $(event.currentTarget).remove()
 
-    $('#index-button').after($('<input>').val('New List').focus());
+    var $input = $('<input>').val('New List Title')
+
+    $('#index-button').after($input);
+
+    $input.focus().select();
+  },
+
+  createNewList: function (event) {
+    var title = $(event.currentTarget).val();
+    $(event.currentTarget).remove();
+
+    $('#index-button').after(this._$newListButton);
+
+    this.model.lists().create({
+      title: title,
+      ord: 0,
+      board_id: this.model.id
+    })
   },
 
   returnToIndex: function (event) {
