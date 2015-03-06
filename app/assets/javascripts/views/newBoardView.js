@@ -22,10 +22,8 @@ TrelloClone.Views.newBoardView = Backbone.View.extend({
 
     var attrs = this.$el.serializeJSON();
 
-    var board = TrelloClone.Collections.boards.create(attrs);
+    var board = TrelloClone.Collections.boards.create(attrs, { wait: true });
 
-    Backbone.history.navigate("", {
-      trigger: false
-    })
+    this.remove();
   }
 });
