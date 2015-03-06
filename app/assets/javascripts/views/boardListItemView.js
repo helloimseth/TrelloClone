@@ -4,10 +4,14 @@ TrelloClone.Views.BoardListItemView = Backbone.CompositeView.extend({
   tagName: 'li',
 
   events: {
-    "click #delete-list": "deleteList"
+    "click #delete-list": "deleteList",
+    "click .new-card-li": "addNewCardForm",
+    "submit .add-card-form": "addNewCard"
   },
 
   initialize: function () {
+    this.$cardList = this.$el.find('#card-list');
+
     this.listenTo(this.model.cards(), "sync remove", this.render)
   },
 
@@ -34,18 +38,37 @@ TrelloClone.Views.BoardListItemView = Backbone.CompositeView.extend({
 
       this.addSubview('#card-list', cardItemView);
     }.bind(this))
-    console.log("renderCardsList: ", this.$el.find('#card-list') );
   },
 
   addCreateLi: function () {
     var $createLi = $('<li>').text("Add new card").addClass("new-card-li");
     this.$el.find('#card-list').append($createLi);
-    console.log("addCreateLi: ", this.$el.find('#card-list') );
+  },
 
+  addNewCardForm: function (event) {
+    this.$addACard = $(event.currentTarget);
+    this.$addACard.remove();
+
+    var newCardForm = new TrelloClone.Views.NewCardFormView({
+      model: this.model
+    });
+
+    this.$el.find('#card-list').append($('<li>').html(newCardForm.render().$el));
+    this.$el.find('.card-title').focus().select();
+  },
+
+  addNewCard: function (event) {
+    event.preventDefault();
+
+    var attrs = $(event.currentTarget).serializeJSON();
+
+    this.model.cards().create(attrs, {
+      wait: true
+    })
   },
 
   deleteList: function (event) {
-    this.remove()
     this.model.destroy()
+    this.remove()
   }
 });

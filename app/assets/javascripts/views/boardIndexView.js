@@ -35,6 +35,7 @@ TrelloClone.Views.BoardIndexView = Backbone.CompositeView.extend({
   renderNewView: function () {
     var newBoardForm = new TrelloClone.Views.newBoardView();
     this.$el.prepend(newBoardForm.render().$el)
+    $('#board-title').focus();
   }
 
 });

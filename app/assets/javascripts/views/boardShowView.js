@@ -11,7 +11,7 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
   events: {
     "click #index-button": "returnToIndex",
     "click #add-list": "renderNewListInput",
-    "blur input": "createNewList"
+    "blur #submit-list": "createNewList"
   },
 
   render: function () {
@@ -40,7 +40,8 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
     this._$newListButton = $(event.currentTarget);
     $(event.currentTarget).remove()
 
-    var $input = $('<input>').val('New List Title')
+    var $input = $('<input>').prop('placeholder','New List Title')
+                             .prop("id", "submit-list")
 
     $('#index-button').after($input);
 

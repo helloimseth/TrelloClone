@@ -18,7 +18,8 @@ TrelloClone.Views.BoardIndexItemView = Backbone.View.extend({
   },
 
   deleteBoard: function (event) {
-    this.remove();
+
     this.model.destroy();
+    this.remove();
   }
 })
