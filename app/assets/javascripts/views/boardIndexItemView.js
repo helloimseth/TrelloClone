@@ -1,4 +1,4 @@
-TrelloClone.Views.BoardIndexItemView = Backbone.Views.extend({
+TrelloClone.Views.BoardIndexItemView = Backbone.View.extend({
   template: JST['board_index_item_view'],
 
   tagName: 'li',
@@ -9,5 +9,7 @@ TrelloClone.Views.BoardIndexItemView = Backbone.Views.extend({
     });
 
     this.$el.html(templatedBoardItem);
+
+    return this;
   }
 })

@@ -1,4 +1,4 @@
-TrelloClone.Collections.Boards = Backbone.Collections.extend({
+TrelloClone.Collections.Boards = Backbone.Collection.extend({
   url: "/api/boards",
 
   model: TrelloClone.Models.Board,
@@ -15,3 +15,5 @@ TrelloClone.Collections.Boards = Backbone.Collections.extend({
     return post;
   }
 });
+
+TrelloClone.Collections.boards = new TrelloClone.Collections.Boards()
