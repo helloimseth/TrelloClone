@@ -8,7 +8,8 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
   },
 
   events: {
-    "click #index-button": "returnToIndex"
+    "click #index-button": "returnToIndex",
+    "click #add-list": "createNewList"
   },
 
   render: function () {
@@ -31,6 +32,13 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
 
       this.addSubview('#lists-list', boardListItemView);
     }.bind(this))
+  },
+
+  createNewList: function (event) {
+    this.$newListButton = $(event.currentTarget);
+    $(event.currentTarget).remove()
+
+    $('#index-button').after($('<input>').val('New List').focus());
   },
 
   returnToIndex: function (event) {
