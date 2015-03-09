@@ -1,6 +1,7 @@
-.list-state-highlight {
-  width: 200px;
-  line-height: 5px;
+#lists-list {
+  width: intrinsic;           /* Safari/WebKit*/
+  width: -moz-max-content;    /* Firefox/Gecko */
+  width: -webkit-max-content;
 }
 
 .list-item {

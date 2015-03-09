@@ -23,6 +23,7 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
     this.$el.html(templatedBoardShow);
 
     this.$el.find('#lists-list').sortable({
+      items: "> li:not(last-child)",
       update: this.changeListOrder
     });
     this.$el.find('#lists-list').disableSelection();
@@ -61,9 +62,9 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
                           .prop("id", "cancel-list")
                           .text("X");
 
-    $('#add-list').html($input)
-                  .append($button)
-                  .append($anchor);
+    this.$('#add-list').html($input)
+                       .append($button)
+                       .append($anchor);
 
     $input.focus().select();
   },
@@ -73,16 +74,14 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
 
     var title = $('#title-input').val()
 
-    $('#add-list').html("<h2>Add new list</h2>")
-
     this.model.lists().create({
       title: title,
-      ord: 0,
+      ord: this.$el.find("#lists-list").children().length,
       board_id: this.model.id
     })
   },
 
-  changeListOrder: function (event, ui) {
+  changeListOrder: function (event) {
     var children = $(event.target).children('.list-item')
 
     for(var i = 0; i < children.length; i++) {
@@ -98,9 +97,8 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
   },
 
   removeNewListInput: function (event) {
-    event.preventDefault();
-    this.$el.find('#add-list').remove();
-    this.addListLi();
+    event.stopPropagation();
+    this.$el.find('#add-list').html("<h2>Add new list</h2>");
   },
 
   returnToIndex: function (event) {

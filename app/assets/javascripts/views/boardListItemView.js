@@ -31,6 +31,7 @@ TrelloClone.Views.BoardListItemView = Backbone.CompositeView.extend({
     this.renderCardsList();
 
     this.$el.find('#card-list').sortable({
+      items:"> li:not(:last-child)",
       connectWith: ".card-list",
       update: this.changeCardOrder
     })
@@ -106,7 +107,6 @@ TrelloClone.Views.BoardListItemView = Backbone.CompositeView.extend({
 
       card.save();
     }
-
   },
 
   deleteList: function (event) {
