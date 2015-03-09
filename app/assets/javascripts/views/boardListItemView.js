@@ -9,11 +9,13 @@ TrelloClone.Views.BoardListItemView = Backbone.CompositeView.extend({
     "click #delete-list": "deleteList",
     "click .new-card-li": "addNewCardForm",
     "submit .add-card-form": "addNewCard",
-    "click #cancel-card": "removeNewCardForm"
+    "click #cancel-card": "removeNewCardForm",
+    // "mouseup .card-item": "changeCardOrder"
   },
 
   initialize: function () {
     this.$cardList = this.$el.find('#card-list');
+    this.$el.find('.card-list').data("id", this.model.id)
 
     this.listenTo(this.model.cards(), "sync remove", this.render)
   },
@@ -26,6 +28,13 @@ TrelloClone.Views.BoardListItemView = Backbone.CompositeView.extend({
     this.$el.html(templatedListItem);
 
     this.renderCardsList();
+
+    this.$el.find('#card-list').sortable({
+      connectWith: ".card-list",
+      update: this.changeCardOrder
+    })
+
+    this.$el.find('#card-list').disableSelection();
 
     this.addCreateLi();
 
@@ -76,6 +85,28 @@ TrelloClone.Views.BoardListItemView = Backbone.CompositeView.extend({
     this.newCardForm.remove();
 
     this.addCreateLi();
+  },
+
+  changeCardOrder: function (event, ui) {
+    var children = $(event.target).children('.card-item')
+
+    for(var i = 0; i < children.length; i++) {
+      var id = $(children[i]).data("id");
+
+      var card = new TrelloClone.Models.Card({
+        id: id,
+        ord: i,
+      });
+
+      if (children[i]===ui.item[0]) {
+        var newListId = ui.item.parent().data("id");
+        card.set("list_id", newListId)
+      }
+
+      card.save();
+    }
+
+    // console.log(ui.item.parent().data("id"));
   },
 
   deleteList: function (event) {

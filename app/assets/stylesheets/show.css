@@ -1,3 +1,8 @@
+.list-state-highlight {
+  width: 200px;
+  line-height: 5px;
+}
+
 .list-item {
   position: relative;
   float: left;
