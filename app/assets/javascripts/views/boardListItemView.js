@@ -9,13 +9,14 @@ TrelloClone.Views.BoardListItemView = Backbone.CompositeView.extend({
     "click #delete-list": "deleteList",
     "click .new-card-li": "addNewCardForm",
     "submit .add-card-form": "addNewCard",
-    "click #cancel-card": "removeNewCardForm",
-    // "mouseup .card-item": "changeCardOrder"
+    "click #cancel-card": "removeNewCardForm"
   },
 
   initialize: function () {
     this.$cardList = this.$el.find('#card-list');
-    this.$el.find('.card-list').data("id", this.model.id)
+
+    this.$el.data("id", this.model.id)
+    this.$cardList.data("id", this.model.id)
 
     this.listenTo(this.model.cards(), "sync remove", this.render)
   },
@@ -106,7 +107,6 @@ TrelloClone.Views.BoardListItemView = Backbone.CompositeView.extend({
       card.save();
     }
 
-    // console.log(ui.item.parent().data("id"));
   },
 
   deleteList: function (event) {

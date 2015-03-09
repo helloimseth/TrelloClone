@@ -22,7 +22,9 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
 
     this.$el.html(templatedBoardShow);
 
-    this.$el.find('#lists-list').sortable();
+    this.$el.find('#lists-list').sortable({
+      update: this.changeListOrder
+    });
     this.$el.find('#lists-list').disableSelection();
 
     this.renderListsList();
@@ -78,6 +80,21 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
       ord: 0,
       board_id: this.model.id
     })
+  },
+
+  changeListOrder: function (event, ui) {
+    var children = $(event.target).children('.list-item')
+
+    for(var i = 0; i < children.length; i++) {
+      var id = $(children[i]).data("id");
+
+      var list = new TrelloClone.Models.List({
+        id: id,
+        ord: i,
+      });
+
+      list.save();
+    }
   },
 
   removeNewListInput: function (event) {
