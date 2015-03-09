@@ -1,0 +1,70 @@
+.list-item {
+  position: relative;
+  float: left;
+  background: #3366FF;
+  margin: 10px 0px 10px 10px;
+  padding: 20px 20px;
+  width: 200px;
+  border-radius: 2px;
+  color: #fff;
+}
+
+.list-item h2 {
+  text-align: center;
+}
+
+.card-item {
+  background: #EEEEEE;
+  margin: 5px 0;
+  padding: 5px 10px;
+  color: #001932;
+}
+
+.card-item strong {
+  font-weight: 700;
+}
+
+.list-item .delete-list {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.list-item .delete-list:before {
+  content: "X";
+  color: #001932;
+}
+
+.list-item .delete-list:hover {
+  color: #BBDDFF;
+}
+
+.new-list-li {
+  color: #001932;
+}
+
+.new-list-li input {
+  margin-bottom: 10px;
+}
+
+.new-list-li a {
+  color: #fff;
+  margin-left: 10px;
+}
+
+.new-list-li a:hover {
+  color: #BBDDFF;
+  margin-left: 10px;
+}
+
+.new-card-li {
+  margin-top: 10px;
+}
+
+.add-card-form {
+  color: #001932;
+}
+
+.add-card-form *:not(button) {
+  width: 160px;
+}

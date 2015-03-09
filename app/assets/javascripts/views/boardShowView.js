@@ -11,7 +11,8 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
   events: {
     "click #index-button": "returnToIndex",
     "click #add-list": "renderNewListInput",
-    "blur #submit-list": "createNewList"
+    "click #submit-list": "createNewList",
+    "click #add-list #cancel-list": "removeNewListInput"
   },
 
   render: function () {
@@ -22,6 +23,8 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
     this.$el.html(templatedBoardShow);
 
     this.renderListsList();
+
+    this.addListLi();
 
     return this;
   },
@@ -36,29 +39,48 @@ TrelloClone.Views.BoardShowView = Backbone.CompositeView.extend({
     }.bind(this))
   },
 
+  addListLi: function () {
+    var $createLi = $('<li>').html("<h2>Add new list</h2>")
+                             .addClass("list-item")
+                             .addClass("new-list-li")
+                             .prop("id", "add-list");
+    this.$el.find('#lists-list').append($createLi);
+  },
+
   renderNewListInput: function (event) {
-    this._$newListButton = $(event.currentTarget);
-    $(event.currentTarget).remove()
-
     var $input = $('<input>').prop('placeholder','New List Title')
-                             .prop("id", "submit-list")
+                             .prop("id", "title-input"),
+        $button = $('<button>').text("Save")
+                               .prop("id", "submit-list"),
+        $anchor = $('<a>').attr('href', "javascript:void(0)")
+                          .prop("id", "cancel-list")
+                          .text("X");
 
-    $('#index-button').after($input);
+    $('#add-list').html($input)
+                  .append($button)
+                  .append($anchor);
 
     $input.focus().select();
   },
 
   createNewList: function (event) {
-    var title = $(event.currentTarget).val();
-    $(event.currentTarget).remove();
+    event.preventDefault();
 
-    $('#index-button').after(this._$newListButton);
+    var title = $('#title-input').val()
+
+    $('#add-list').html("<h2>Add new list</h2>")
 
     this.model.lists().create({
       title: title,
       ord: 0,
       board_id: this.model.id
     })
+  },
+
+  removeNewListInput: function (event) {
+    event.preventDefault();
+    this.$el.find('#add-list').remove();
+    this.addListLi();
   },
 
   returnToIndex: function (event) {

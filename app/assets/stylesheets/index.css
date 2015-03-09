@@ -1,0 +1,46 @@
+.board-item {
+  position: relative;
+  float: left;
+  background: #3366FF;
+  margin: 10px 0px 10px 10px;
+  padding: 20px 20px;
+  width: 200px;
+  height: 150px;
+  border-radius: 2px;
+  color: #fff;
+}
+
+.board-item:hover{
+  background: #6699FF;
+  cursor: pointer;
+}
+
+.board-item h2 {
+  text-align: left;
+}
+
+.board-item .delete-board {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.board-item .delete-board:before {
+  content: "X";
+}
+
+.board-item .delete-board:hover {
+  color: #0033FF;
+}
+
+.new-board-li {
+  background: #BBDDFF;
+  color: #001932;
+}
+
+.new-board-li input {
+  border-radius: 2px;
+  width: 160px;
+  border: none;
+  padding: 5px 10px;
+}

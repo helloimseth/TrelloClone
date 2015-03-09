@@ -3,6 +3,8 @@ TrelloClone.Views.CardItemView = Backbone.View.extend({
 
   tagName: 'li',
 
+  className: 'card-item',
+
   render: function () {
     var templatedCard = this.template({
       card: this.model

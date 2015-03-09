@@ -18,6 +18,8 @@ TrelloClone.Views.BoardIndexView = Backbone.CompositeView.extend({
 
     this.renderBoardList();
 
+    this.addBoardLi();
+
     return this
   },
 
@@ -32,9 +34,19 @@ TrelloClone.Views.BoardIndexView = Backbone.CompositeView.extend({
     }.bind(this))
   },
 
+  addBoardLi: function () {
+    var $createLi = $('<li>').html("<h2>Add new board</h2>")
+                             .addClass("board-item")
+                             .addClass("new-board-li")
+                             .prop("id", "new-board");
+    this.$el.find('#board-list').append($createLi);
+  },
+
   renderNewView: function () {
-    var newBoardForm = new TrelloClone.Views.newBoardView();
-    this.$el.prepend(newBoardForm.render().$el)
+    var newBoardForm = new TrelloClone.Views.newBoardView({
+      el: this.$el.find('#new-board')
+    });
+    newBoardForm.render();
     $('#board-title').focus();
   }
 
